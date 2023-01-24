@@ -18,13 +18,17 @@ function update_calc(){
 
   let result_dist = document.getElementById("distance");
   let result_time = document.getElementById("time");
-
-  if (load < 0 || force <= 0 || req_s <= 0 || base_m <= 0){
+  let warning = document.getElementById("warning");
+  if (load < 0 || force <= 0 || req_s <= 0 || base_m <= 0 || load > 99999999999999999999 || force > 99999999999999999999 || req_s > 99999999999999999999 || base_m > 99999999999999999999){
     result_dist.innerHTML = "N/A";
     result_time.innerHTML = "N/A";
+    warning.innerHTML = "Warning: Invalid input";
+
   } else {
-    result_dist.innerHTML = distance_till_takeoff(parseInt(load)) + "m";
-    result_time.innerHTML = time_till_takeoff(parseInt(load)) + " seconds";
+    result_dist.innerHTML = distance_till_takeoff(parseInt(load)).toFixed(2) + "m";
+    result_time.innerHTML = time_till_takeoff(parseInt(load)).toFixed(2) + " seconds";
+    warning.innerHTML = "Warning: None"; 
+
   }
 
 } 
@@ -33,15 +37,15 @@ function time_till_takeoff(mass){
   let fullMass = base_m + mass;
   let time = (fullMass * req_s) / force;
   if (time > 60){
-    max = 60 * force / req_s - base_m
-    console.log(`Plane unencumbered. Please remove ${(mass - max).toFixed(2)}kg from the plane. `);
+    max = 60 * force / req_s - base_m;
+    warning.innerHTML = `Plane unencumbered. Please remove ${(mass - max).toFixed(2)}kg from the plane. `;
   }
   return time;
 }
 
 function distance_till_takeoff(mass){
   let fullMass = base_m + mass;
-  let a = force / fullMass
-  let t = time_till_takeoff(mass)
+  let a = force / fullMass;
+  let t = time_till_takeoff(mass);
   return 0.5 * (a * t * t);
 }  

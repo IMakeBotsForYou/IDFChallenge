@@ -20,9 +20,7 @@ def create_app():
 
     app.config.from_mapping(
         SECRET_KEY='dev'
-        # DATABASE=os.path.join(app.instance_path, 'data.db'),
     )
-
 
     # a simple page that says hello
     @app.route('/')
