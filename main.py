@@ -39,7 +39,7 @@ def time_till_takeoff(m):
 		# 60f/v = m+x
 		# 60f/v-m = x
 		# Extra load it takes to make the take off 60s
-		max_mass = 60 * params["force"] /  params["req_speed"] - params["base_mass"]
+		max_mass = 60 * params["force"] / params["req_speed"] - params["base_mass"]
 		x = m - max_mass
 		# Within .01kg percision
 		raise ValueError(f"Plane unencumbered. Please remove {round(x, 2)}kg from the plane.")
@@ -81,12 +81,17 @@ def distance_till_takeoff(m):
 	t = time_till_takeoff(m)
 	return getX(a=a, t=t, x0=0, v0=0)
 
-load = input("Please input load (default 0) > ")
-if not load:
-	load = "0"
-assert load.isnumeric()
-load = int(load)
-assert load >= 0
 
-print(f"\nT-{time_till_takeoff(load)}s")
-print(f"{distance_till_takeoff(load)}m runway required\n")
+
+if __name__ == "__main__":
+
+	load = input("Please input load (default 0) > ")
+	if not load:
+		load = "0"
+	assert load.isnumeric()
+	load = int(load)
+	assert load >= 0
+
+
+	print(f"\nT-{time_till_takeoff(load)}s")
+	print(f"{distance_till_takeoff(load)}m runway required\n")
