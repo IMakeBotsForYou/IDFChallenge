@@ -26,7 +26,8 @@ def create_app():
           # Default values = params
           # Switch default values with user input
           # where needed
-          for n,v in request.form.items():
+
+          for n,v in dict(request.get_json()).items():
             if v != "":
               params[n] = int(v)
 
