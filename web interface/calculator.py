@@ -1,6 +1,15 @@
 import json
 from equations import getX
-
+def cache(function):
+  memory = {}
+  def wrapper(*args):
+    if args in memory:
+      return memory[args]
+    else:
+      result = function(*args)
+      memory[args] = result
+      return result
+  return wrapper
 
 ### time_till_takeoff
 # speed required for lift off = 140m/s
@@ -19,17 +28,14 @@ from equations import getX
 # t = (m*v)/f
 # t = (m * 140) / 100,000
 
-with open("params.json") as f:
-		params = json.load(f)
-
-
-def time_till_takeoff(m):
+@cache
+def time_till_takeoff(m, base_mass=35000, force=100000, req_speed=140):
 
 	assert m >= 0
 
 
-	full_mass = (params["base_mass"] + m)
-	time = full_mass * params["req_speed"] / params["force"]
+	full_mass = (base_mass + m)
+	time = full_mass * req_speed / force
 	try:
 		assert time <= 60
 	except AssertionError:
@@ -43,12 +49,13 @@ def time_till_takeoff(m):
 
 		
 		# Extra load it takes to make the take off 60s
-		max_mass = 60 * params["force"] / params["req_speed"] - params["base_mass"]
+		max_mass = 60 * force / req_speed - base_mass
 		x = m - max_mass
 		# Within .01kg percision
-		raise ValueError(f"Plane unencumbered. Please remove {round(x, 2)}kg from the plane.")
+		return time, f"Plane unencumbered. Please remove {round(x, 2)}kg from the plane."
+		# raise ValueError(f"Plane unencumbered. Please remove {round(x, 2)}kg from the plane.")
 	else:
-		return time
+		return time, None
 
 
 # check
@@ -76,13 +83,13 @@ def time_till_takeoff(m):
 # a = f/(m0+m)
 
 
-
-def distance_till_takeoff(m):
+@cache
+def distance_till_takeoff(m, base_mass=35000, force=100000, req_speed=140):
 	assert m >= 0
 
-	full_mass = params["base_mass"] + m
-	a = params["force"] / full_mass
-	t = time_till_takeoff(m)
+	full_mass = base_mass + m
+	a = force / full_mass
+	t, _ = time_till_takeoff(m, base_mass, force, req_speed)
 	return getX(a=a, t=t, x0=0, v0=0)
 
 

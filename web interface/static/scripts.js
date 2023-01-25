@@ -3,7 +3,11 @@ let force = 100000;
 let req_s = 140;
 let base_m = 35000;
 
-
+//  This is to update the calculations every time a key
+//  is pressed. But, yall wanted a system that doesn't
+//  do useless computations, so I made it a forum.
+//  Thus, this file is no longer needed, but I'll keep 
+//  it here for perservation's sake.
 function update_calc(){
   load = document.getElementById("load").value;
   force = document.getElementById("force").value;

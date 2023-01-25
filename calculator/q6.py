@@ -5,10 +5,14 @@ from equations import getX
 with open("params.json") as f:
 	params = json.load(f)
 
-"""It would be very simple to add wind resistance
+"""
+It would be very simple to add wind resistance
 		Using simple trigonometry functions we can calculate the
 		force that wind would act out on a plane, whether it would
 		be resisting the plane, or giving it a push.
+
+Temperature could also affect flight conditions, 
+but I am not versed in how it does so.
 """
 
 def wind_resistance(a, force):
