@@ -36,3 +36,28 @@
     transform: rotate(360deg);
   }
 }
+
+.hd { grid-area: hd; }
+.lt { grid-area: lt; }
+.lb { grid-area: lb; }
+.rt { grid-area: rt; }
+.rb { grid-area: rb; }
+.ft { grid-area: ft; }
+
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'hd hd hd hd'
+    'lt lt rt rt'
+    'lt lt rt rt'
+    'lb lb rt rt'
+    'lb lb rb rb';
+  gap: 10px;  
+  padding: 10px;
+}
+
+.grid-container > div {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px 0;
+}
