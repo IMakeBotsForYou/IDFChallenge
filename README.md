@@ -3,7 +3,6 @@
 Currently WIP
 
 This branch contains the simple* versions of the questions,
-
 asked in the earlier stages.
 
 
