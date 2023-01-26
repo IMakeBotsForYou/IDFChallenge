@@ -137,11 +137,12 @@ function WeatherButton() {
 
         {weather_check.bool ? "You can fly @ " + weather_check.index + ":00" : temp_data !== [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ? "You can't fly today." : ""} <br></br>
         <button className="rt epic_button" onClick={onClick}>Check Weather</button> 
-
+        <div className="abc">
         <HighchartsReact
         highcharts={Highcharts}
         options={chartOptions}
           />
+          </div>
         </div>
 
     </>)

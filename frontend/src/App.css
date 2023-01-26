@@ -50,17 +50,16 @@ header {
  justify-content: space-evenly; 
  background-color: #2c2f33;
 }
+
 .highcharts-container {
   padding-right: 5px;
   padding-top: 10px;
   padding-left: 5px;
   padding-bottom: 10px;
-  margin:auto;
+  margin:auto !important;
+}
 
-}
-.highcharts-urrm9b1-30{
-  width:100%;
-}
+
 .grid-container > div {
   border-radius: 10px;
   background-color: #2f3136;
@@ -123,4 +122,9 @@ header {
   text-align: center;
 
 
+}
+
+.abc {
+   display: flex;
+   justify-content: center;
 }
