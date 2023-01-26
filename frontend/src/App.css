@@ -1,5 +1,9 @@
 .App {
   text-align: center;
+  background-color: #2c2f33; 
+}
+.all {
+  background-color: #2c2f33;
 }
 
 .App-logo {
@@ -13,19 +17,8 @@
   }
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  top: 20px;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
+header {
+    background-color: #2c2f33;
 }
 
 @keyframes App-logo-spin {
@@ -48,16 +41,86 @@
 .grid-container {
   display: grid;
   grid-template-areas:
-    'hd hd hd hd'
-    'lt lt rt rt'
-    'lt lt rt rt'
-    'lb lb rt rt'
-    'lb lb rb rb';
+    'lt lt rt rt rt rt rt'
+    'lt lt rb rb rb rb rb'
+    'lb lb rb rb rb rb rb'
+    'lb lb rb rb rb rb rb';
   gap: 10px;  
   padding: 10px;
+ justify-content: space-evenly; 
+ background-color: #2c2f33;
+}
+.highcharts-container {
+  padding-right: 5px;
+  padding-top: 10px;
+  padding-left: 5px;
+  padding-bottom: 10px;
+  margin:auto;
+
+}
+.highcharts-urrm9b1-30{
+  width:100%;
+}
+.grid-container > div {
+  border-radius: 10px;
+  background-color: #2f3136;
+  padding: 5px 5px 5px 5px;
+  transition: background 0.3s ease-in-out;
 }
 
-.grid-container > div {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px 0;
+.grid-container > div:hover {
+  background-color: #3c3f45;
+  transition: background 0.3s ease-in-out;
+}
+
+
+/*BLACK   #2f3136       SELECTED GRAY 3c3f45    TEXT #d3dbdb  */
+  .box {
+    border-radius: 10px;
+    background-color: #99aab5;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    transition: background 0.3s ease-in-out;
+  }
+
+.box:hover {
+  background-color: #4d5056;
+  transition: background 0.3s ease-in-out;
+}
+
+
+  .value {
+    border-radius: 10px;
+    background-color: #9eafba;
+    padding: 5px;
+    margin-left: auto;
+    text-align: right;
+  }
+
+
+  .pair{
+    padding-bottom: 8px;
+  }
+
+
+  .epic_button{
+    border-radius: 7px;
+    margin-top: 5px;
+    padding: 7px 14px 7px 14px;
+    color: #fff;
+    background-color: #2f3136; 
+    transition: background 0.2s ease-in-out;
+  }
+
+  .epic_button:hover{
+    background-color: #403136; 
+    transition: background 0.2s ease-in-out;
+  }
+
+.right_top_part{
+  text-align: center;
+
+
 }

@@ -68,7 +68,7 @@ const useScript = url => {
 
 function checkArray(arr) {
   for (let i = 0; i < arr.length; i++) {
-    if (arr[i] > 15 && arr[i] < 30) {
+    if (arr[i] >= 15 && arr[i] <= 30) {
       return { bool: true, index: i };
     }
   }
@@ -78,12 +78,26 @@ function checkArray(arr) {
 
 
 
-
 function WeatherButton() {
+
+    const componentDidMount = () => {
+      const collection = document.getElementsByClassName("editable");
+      for (let i = 0; i < collection.length; i++) {
+        const coli = collection[i];
+        coli.addEventListener('keydown', (evt) => {
+          if (!(((evt.keyCode >= 48 && evt.keyCode <= 57) || (evt.keyCode >= 96 && evt.keyCode <= 105) || (evt.keyCode === 8 || (evt.keyCode >= 37 && evt.keyCode <= 40) )))) 
+              evt.preventDefault(); // 0-9 only, arrow keys, backspace
+          if (coli.id == "month" && parseInt(coli.innerHTML + evt.key) > 12)
+            evt.preventDefault();
+          if (coli.id == "day" && parseInt(coli.innerHTML + evt.key) > 31)
+            evt.preventDefault();
+        });
+      }
+    }
+
     const [temp_data, setData] = useState(
       [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     );  
-
     const [chartOptions, setChartOptions] = useState(generate_options(temp_data));
     useEffect(() => {
         setChartOptions(generate_options(temp_data));
@@ -92,7 +106,10 @@ function WeatherButton() {
     const onClick = (event) => {
         // Using fetch to fetch the api from 
         // flask server it will be redirected to proxy
-        fetch("https://api.open-meteo.com/v1/forecast?latitude=30&longitude=35&hourly=temperature_2m&start_date=2023-01-01&end_date=2023-01-01", {
+        var year = document.getElementById("year").innerHTML;
+        var month = document.getElementById("month").innerHTML;
+        var day = document.getElementById("day").innerHTML;
+        fetch(`https://api.open-meteo.com/v1/forecast?latitude=30&longitude=35&hourly=temperature_2m&start_date=${year.padStart(4)}-${month.padStart(2)}-${day.padStart(2)}&end_date=${year.padStart(4)}-${month.padStart(2)}-${day.padStart(2)}`, {
             "method": "GET"
         }).then((res) =>
             res.json().then((json_res) => {
@@ -104,17 +121,28 @@ function WeatherButton() {
                 })  
             ).catch(error => console.log(error));
     }
-
+    componentDidMount()
     var weather_check = checkArray(temp_data)
     return (<>
-      <h4>01/01/2023</h4>
-      {weather_check.bool ? "You can fly @ " + weather_check.index + ":00" : temp_data != [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ? "You can't fly today." : ""} <br></br>
-      <button class="rt" onClick={onClick}>Check Weather</button> 
+        <div className="right_top_part">
+        <h3>Weather</h3><br></br>  
+        <div style={{display: "inline"}}>
+          <span>Edit: </span>
+          <span id="day" className="editable" contentEditable="true">01</span>
+          <span id="line1" >-</span>
+          <span id="month" className="editable" contentEditable="true">01</span>
+          <span id="line2">-</span>
+          <span id="year" className="editable" contentEditable="true">2023</span>
+        </div><br></br><br></br>
 
-      <HighchartsReact
-      highcharts={Highcharts}
-      options={chartOptions}
-    />
+        {weather_check.bool ? "You can fly @ " + weather_check.index + ":00" : temp_data !== [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] ? "You can't fly today." : ""} <br></br>
+        <button className="rt epic_button" onClick={onClick}>Check Weather</button> 
+
+        <HighchartsReact
+        highcharts={Highcharts}
+        options={chartOptions}
+          />
+        </div>
 
     </>)
   
@@ -160,9 +188,10 @@ function MyForm() {
 
   return ( 
     <>
-    <div class="lt">
+    <div className="lt">
     <form onSubmit={handleSubmit}>
     <h2>Inputs</h2>
+    <div className="pair">
       <label>Load:</label>
       <input 
         type="number" 
@@ -170,7 +199,8 @@ function MyForm() {
         value={inputs.load || 0} 
         onChange={handleChange}
         style={{float: 'right'}}
-      /><br></br>
+      /></div>
+      <div className="pair">
       <label>Enter your Base Mass:  </label>
         <input 
           type="number" 
@@ -178,7 +208,8 @@ function MyForm() {
           value={inputs.base_mass || 35000} 
           onChange={handleChange}
           style={{float: 'right'}}
-        /><br></br>
+        /></div>
+        <div className="pair">
       <label>Enter your Force:  </label>
         <input 
           type="number" 
@@ -186,31 +217,40 @@ function MyForm() {
           value={inputs.force || 100000} 
           onChange={handleChange}
           style={{float: 'right'}}
-        /><br></br>
-      <label>Enter your Required Speed:  </label>
+        /></div>
+        <div className="pair">
+      <label>Enter your Required Speed:　</label>
         <input 
           type="number" 
           name="req_speed" 
           value={inputs.req_speed || 140} 
           onChange={handleChange}
           style={{float: 'right'}}
-        /><br></br>
-        <input type="submit" />
+        /></div>
+        <input type="submit" className="epic_button" value="Calculate"/>
     </form>
     </div>
-    <div class="lb">
-        <h2>Results</h2>
-        <p>
-          Take off will take {data.time}s
-        </p>
-        <p>
-          Runway length: {data.distance}m
-        </p>
-        <br></br>
-        <p>
-          Warning: {data.warning}
-        </p>
+
+
+    <div className="lb"><br></br>
+    <h2>Results</h2>
+    <div className="box">
+      <p>
+        Take off will take <span className="value">{data.time}s</span>
+      </p>
     </div>
+    <div className="box">
+      <p>
+        Runway length: <span className="value">{data.distance}m</span>
+      </p>
+    </div>
+    <div className="box">
+      <p>
+        Warning: <span className="value">{data.warning}</span>
+      </p>
+    </div>
+    </div>
+
     </>
   )
 }
@@ -219,21 +259,17 @@ function MyForm() {
 function App() {
     return (
         <>
-        <div class="grid-container">
+        <div className="all">
+          <div className="grid-container">
 
-            <div className="App hd">
-              <header>
-                <h1>Takeoff calculator</h1>
-              </header>
-            </div>
+              <div>
+                <MyForm/>
+              </div>
 
-            <div>
-              <MyForm/>
-            </div>
-
-            <div class="rt">
-              <WeatherButton/>
-            </div>
+              <div className="rt">
+                <WeatherButton/>
+              </div>
+          </div>
         </div>
         </>
     ); 
