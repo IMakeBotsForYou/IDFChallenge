@@ -1,0 +1,98 @@
+.App {
+  text-align: center;
+  background-color: #2c2f33; 
+}
+.all {
+  background-color: #2c2f33;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+header {
+    background-color: #2c2f33;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.hd { grid-area: hd; }
+.lt { grid-area: lt; }
+.lb { grid-area: lb; }
+.rt { grid-area: rt; }
+.rb { grid-area: rb; }
+.ft { grid-area: ft; }
+
+
+.grid-container {
+  display: grid;
+  grid-template-areas:
+    'lt lt rt rt rt rt rt'
+    'lt lt rb rb rb rb rb'
+    'lb lb rb rb rb rb rb'
+    'lb lb rb rb rb rb rb';
+  gap: 10px;  
+  padding: 10px;
+ justify-content: space-evenly; 
+ background-color: #2c2f33;
+}
+.highcharts-container {
+  width: 100%;
+  padding: 20px 0;
+}
+.grid-container > div {
+  border-radius: 10px;
+  background-color: #2f3136;
+  padding: 5px 5px 5px 5px;
+  transition: background 0.5s ease-in-out;
+}
+
+.grid-container > div:hover {
+  background-color: #3c3f45;
+  transition: background 0.5s ease-in-out;
+}
+
+
+/*BLACK   #2f3136       SELECTED GRAY 3c3f45    TEXT #d3dbdb  */
+  .box {
+    border-radius: 10px;
+    background-color: #99aab5;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    transition: background 0.5s ease-in-out;
+  }
+
+.box:hover {
+  background-color: #4d5056;
+  transition: background 0.5s ease-in-out;
+}
+
+
+  .value {
+    border-radius: 10px;
+    background-color: #9eafba;
+    padding: 5px;
+    margin-left: auto;
+    text-align: right;
+  }
+
+
+  .pair{
+    padding-bottom: 8px;
+  }
